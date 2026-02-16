@@ -1,28 +1,26 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Deeptesh Mejari — Investment Strategy & Research</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0f1115;
-  --glass:rgba(255,255,255,0.04);
+  --bg:#0c0f14;
+  --text:#f3f5f7;
+  --muted:#9aa3ad;
+  --glass:rgba(255,255,255,0.05);
   --border:rgba(255,255,255,0.08);
-  --text:#f2f4f7;
-  --muted:#a0a8b3;
-  --accent:#7aa2ff;
-  --max:1050px;
+  --accent:#8ab4ff;
+  --max:1100px;
 }
 
 *{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -30,102 +28,112 @@ body{
   background:var(--bg);
   color:var(--text);
   line-height:1.7;
-  letter-spacing:0.2px;
+  opacity:0;
+  animation:pageFade 1s ease forwards;
 }
 
-/* Subtle background glow */
+/* layered liquid depth */
 body::before{
   content:"";
   position:fixed;
   top:-200px;
-  right:-200px;
-  width:600px;
-  height:600px;
-  background:radial-gradient(circle, rgba(122,162,255,0.08), transparent 70%);
-  filter:blur(120px);
+  left:-200px;
+  width:700px;
+  height:700px;
+  background:radial-gradient(circle, rgba(138,180,255,0.12), transparent 70%);
+  filter:blur(140px);
   z-index:-1;
 }
 
-a{
-  color:var(--accent);
-  text-decoration:none;
+body::after{
+  content:"";
+  position:fixed;
+  bottom:-200px;
+  right:-200px;
+  width:700px;
+  height:700px;
+  background:radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);
+  filter:blur(160px);
+  z-index:-1;
 }
 
-a:hover{
-  text-decoration:underline;
-}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
 
 .wrap{
   max-width:var(--max);
   margin:0 auto;
-  padding:70px 24px 120px;
+  padding:140px 24px 120px;
 }
 
-/* HEADER */
+/* floating glass nav */
 header{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:1000px;
   display:flex;
   justify-content:space-between;
-  align-items:flex-start;
-  border-bottom:1px solid var(--border);
-  padding-bottom:24px;
-  margin-bottom:80px;
+  align-items:center;
+  padding:18px 30px;
+  background:var(--glass);
+  border:1px solid var(--border);
+  border-radius:20px;
+  backdrop-filter:blur(35px);
+  z-index:999;
+  transition:0.4s ease;
+}
+
+header.scrolled{
+  backdrop-filter:blur(50px);
+  background:rgba(255,255,255,0.08);
 }
 
 .brand h1{
   margin:0;
-  font-size:26px;
+  font-size:18px;
   font-weight:600;
 }
 
-.brand p{
-  margin:8px 0 0;
-  font-size:14px;
+.brand span{
+  display:block;
+  font-size:12px;
   color:var(--muted);
 }
 
 nav{
   display:flex;
-  gap:28px;
-  font-size:13px;
-  letter-spacing:0.08em;
+  gap:25px;
+  font-size:12px;
+  letter-spacing:0.15em;
   text-transform:uppercase;
 }
 
-nav a{
-  color:var(--muted);
-  transition:0.25s ease;
-}
+nav a{color:var(--muted);transition:0.3s}
+nav a:hover{color:var(--text)}
 
-nav a:hover{
-  color:var(--text);
-}
-
-/* HERO */
+/* hero */
 .hero{
-  margin-bottom:110px;
-  max-width:850px;
+  max-width:800px;
+  margin:0 auto 120px;
+  text-align:left;
 }
 
 .hero h2{
   font-size:44px;
-  font-weight:600;
-  margin:0 0 28px;
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeInUp 1s ease forwards;
+  margin:0 0 30px;
 }
 
 .hero p{
-  font-size:16px;
   color:var(--muted);
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeInUp 1.5s ease forwards;
 }
 
-/* Sections */
+/* sections */
 section{
-  margin-top:110px;
+  margin-top:120px;
+  transition:filter 0.6s ease, opacity 0.6s ease;
 }
 
 section h3{
@@ -133,76 +141,63 @@ section h3{
   letter-spacing:0.25em;
   text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:40px;
+  margin-bottom:50px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:40px;
+  gap:50px;
 }
 
-/* Glass Cards */
+/* glass cards */
 .card{
-  background:var(--glass);
+  background:linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
   border:1px solid var(--border);
-  backdrop-filter:blur(30px);
-  -webkit-backdrop-filter:blur(30px);
-  padding:36px;
-  border-radius:22px;
-  transition:all 0.35s ease;
+  border-radius:24px;
+  padding:40px;
+  backdrop-filter:blur(40px) saturate(160%);
+  transition:all 0.4s ease;
 }
 
 .card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(122,162,255,0.4);
+  transform:translateY(-8px);
+  border-color:rgba(138,180,255,0.5);
 }
 
-.card b{
-  font-weight:600;
-  display:block;
-  margin-bottom:16px;
-  font-size:15px;
+.card b{display:block;margin-bottom:18px;font-weight:600}
+li{margin:10px 0;color:var(--muted)}
+
+/* certification hover glow */
+.cert{
+  display:flex;
+  align-items:center;
+  gap:20px;
 }
 
-ul{
-  padding-left:20px;
-  margin:0;
+.cert img{
+  width:55px;
+  height:55px;
+  object-fit:contain;
+  transition:0.4s ease;
 }
 
-li{
-  margin:10px 0;
-  color:var(--muted);
-  font-size:14px;
+.cert:hover img{
+  filter:drop-shadow(0 0 12px rgba(138,180,255,0.7));
+  transform:scale(1.05);
 }
 
-/* Document Preview */
 iframe{
   width:100%;
   height:520px;
   border:none;
   border-radius:16px;
-  background:#0f1115;
+  background:#0c0f14;
   transition:0.3s ease;
 }
 
-.card:hover iframe{
-  transform:scale(1.01);
-}
+.card:hover iframe{transform:scale(1.01)}
 
-/* Fade on scroll */
-.fade{
-  opacity:0;
-  transform:translateY(40px);
-  transition:all 0.8s ease;
-}
-
-.fade.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* Footer */
 .footer{
   margin-top:140px;
   border-top:1px solid var(--border);
@@ -211,124 +206,131 @@ iframe{
   font-size:13px;
 }
 
-@keyframes fadeInUp{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
+/* scroll fade */
+.fade{
+  opacity:0;
+  transform:translateY(50px);
+  transition:all 1s ease;
+}
+
+.fade.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* subtle parallax */
+.parallax{
+  transform:translateY(var(--scroll,0));
+  transition:transform 0.2s ease-out;
+}
+
+@keyframes pageFade{
+  to{opacity:1}
 }
 
 @media(max-width:850px){
-  .hero h2{
-    font-size:32px;
-  }
+  .hero h2{font-size:30px}
 }
 </style>
 </head>
 
 <body>
-<div class="wrap">
 
-<header>
+<header id="navbar">
   <div class="brand">
     <h1>Deeptesh Mejari</h1>
-    <p>Investment Strategy • Equity Research • Alternative Markets • Systems Architecture</p>
+    <span>Investment Strategy • Research • Systems Architecture</span>
   </div>
   <nav>
+    <a href="#bio">Bio</a>
     <a href="#research">Research</a>
     <a href="#systems">Systems</a>
-    <a href="#publications">Publications</a>
+    <a href="#certifications">Credentials</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<div class="hero">
-  <h2>Strategic investment thinking, built on disciplined research and structured execution.</h2>
+<div class="wrap">
+
+<div class="hero parallax">
+  <h2>Structured investment thinking, executed with discipline and system design.</h2>
   <p>
-    Investment professional operating across public equities and private markets.
-    Combines bottom-up financial analysis, portfolio structuring logic, and AI-enabled
-    research systems to deliver investor-grade clarity.
-    Based in Mumbai. Open to investment strategy, research, and advisory roles.
+  Investment professional operating across public equities and private markets.
+  Combines bottom-up analysis, allocation logic, and AI-enabled workflows
+  to deliver decision-ready clarity.
+  Based in Mumbai. Open to strategy, research, and advisory mandates.
   </p>
 </div>
+
+<section id="bio" class="fade">
+<h3>Executive Biography</h3>
+<div class="card">
+Investment strategist with experience spanning equity research, private markets evaluation,
+and fund-level operations. Built structured valuation frameworks, portfolio simulations,
+and AI-assisted research systems to enhance decision velocity and analytical depth.
+Bridges financial modeling with enterprise-grade workflow design.
+</div>
+</section>
 
 <section id="research" class="fade">
 <h3>Research & Advisory Work</h3>
 <div class="grid">
-
 <div class="card">
-<b>Equity Research & IPO Evaluation</b>
+<b>Equity Research & IPO Analysis</b>
 <ul>
-<li>Bottom-up financial modeling and valuation structuring</li>
-<li>IPO offer analysis, catalyst mapping, and red-flag assessment</li>
-<li>Sensitivity and regression-backed scenario framing</li>
-<li>Structured thesis documentation for stakeholder clarity</li>
+<li>Financial modeling and structured valuation frameworks</li>
+<li>IPO diligence and catalyst mapping</li>
+<li>Regression-backed scenario analysis</li>
 </ul>
 </div>
-
 <div class="card">
-<b>Private Markets & Portfolio Structuring</b>
+<b>Private Markets & Allocation Logic</b>
 <ul>
-<li>Private equity and alternative asset screening frameworks</li>
-<li>Return driver isolation and downside modeling</li>
-<li>Allocation logic under exposure and drawdown controls</li>
-<li>Investor-ready summary outputs and decision notes</li>
+<li>PE and alternative asset screening</li>
+<li>Downside scenario modeling</li>
+<li>Exposure and drawdown governance</li>
 </ul>
 </div>
-
 </div>
 </section>
 
 <section id="systems" class="fade">
-<h3>Systems & Execution Architecture</h3>
+<h3>Systems Architecture</h3>
 <div class="grid">
-
 <div class="card">
 <b>AI-Enabled Investment Workflows</b>
 <ul>
-<li>LLM-based financial extraction and insight pipelines</li>
-<li>Portfolio simulation engines with risk-adjusted outputs</li>
-<li>Prompt engineering for structured research acceleration</li>
-<li>Documentation discipline for repeatable decision systems</li>
+<li>LLM-based financial extraction pipelines</li>
+<li>Portfolio simulation engines</li>
+<li>Prompt engineering for structured insight generation</li>
 </ul>
 </div>
-
 <div class="card">
-<b>Fund Operations & NAV Governance</b>
+<b>NAV & Fund Governance</b>
 <ul>
-<li>Investor-level NAV computation for open-ended structures</li>
-<li>SOA drafting and reconciliation oversight</li>
-<li>MIS reporting frameworks aligned to decision cycles</li>
-<li>Control structures supporting operational clarity</li>
+<li>Investor-level NAV computation</li>
+<li>Reconciliation frameworks</li>
+<li>MIS reporting architecture</li>
 </ul>
 </div>
-
 </div>
 </section>
 
-<section id="publications" class="fade">
-<h3>Publications & Credentials</h3>
+<section id="certifications" class="fade">
+<h3>Credentials & Programs</h3>
 <div class="grid">
-
-<div class="card">
-<b>Resume</b>
-<iframe src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank">
-Download Resume (PDF)
-</a>
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/McKinsey_%26_Company_logo.svg">
+<div><b>McKinsey Forward Learning Program</b></div>
 </div>
-
-<div class="card">
-<b>Alternative Investments Research Paper I</b>
-<iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg">
+<div><b>IBM Data Science</b></div>
 </div>
-
-<div class="card">
-<b>Alternative Investments Research Paper II</b>
-<iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
+<div><b>Google Data Foundations</b></div>
 </div>
-
 </div>
 </section>
 
@@ -336,16 +338,13 @@ Download Resume (PDF)
 <h3>Contact</h3>
 <div class="card">
 Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
-Phone: +91 73041 29138<br><br>
 Location: Mumbai<br><br>
-LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">
-linkedin.com/in/deeptesh-mejari
-</a>
+LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">linkedin.com/in/deeptesh-mejari</a>
 </div>
 </section>
 
 <div class="footer">
-© <span id="year"></span> Deeptesh Mejari — Investment Strategy & Research
+© <span id="year"></span> Deeptesh Mejari
 </div>
 
 </div>
@@ -353,6 +352,16 @@ linkedin.com/in/deeptesh-mejari
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
 
+/* nav blur on scroll */
+window.addEventListener("scroll",()=>{
+  if(window.scrollY>40){
+    document.getElementById("navbar").classList.add("scrolled");
+  }else{
+    document.getElementById("navbar").classList.remove("scrolled");
+  }
+});
+
+/* fade observer */
 const faders=document.querySelectorAll('.fade');
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
@@ -362,6 +371,13 @@ const observer=new IntersectionObserver(entries=>{
   });
 });
 faders.forEach(el=>observer.observe(el));
+
+/* subtle parallax */
+window.addEventListener("scroll",()=>{
+  document.querySelectorAll('.parallax').forEach(el=>{
+    el.style.setProperty('--scroll', window.scrollY * -0.05 + "px");
+  });
+});
 </script>
 
 </body>
