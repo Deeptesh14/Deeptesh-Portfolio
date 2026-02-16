@@ -1,411 +1,463 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>Deeptesh Mejari — Investment Strategy & Research</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0c0f14;
-  --text:#f3f5f7;
-  --muted:#9aa3ad;
-  --glass:rgba(255,255,255,0.05);
-  --border:rgba(255,255,255,0.08);
-  --accent:#8ab4ff;
-  --max:1100px;
+  --bg: #0b0f14;
+  --text: #f3f5f7;
+  --muted: #9aa3ad;
+  --glass: rgba(255,255,255,0.04);
+  --glass-strong: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.08);
+  --accent: #7da9ff;
+  --max-width: 1100px;
+  --nav-radius: 18px;
+  --safe-top: 160px; /* fallback, will be updated by JS */
 }
 
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
-
 body{
   margin:0;
-  font-family:'Inter',sans-serif;
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
   background:var(--bg);
   color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
   line-height:1.7;
-  opacity:0;
-  animation:pageFade 1s ease forwards;
+  letter-spacing:0.15px;
+  min-height:100vh;
 }
 
-/* layered liquid depth */
+/* Layered background depth (liquid subtle) */
 body::before{
   content:"";
   position:fixed;
-  top:-200px;
-  left:-200px;
-  width:700px;
-  height:700px;
-  background:radial-gradient(circle, rgba(138,180,255,0.12), transparent 70%);
+  top:-220px;
+  left:-220px;
+  width:760px;
+  height:760px;
+  background:radial-gradient(circle, rgba(125,162,255,0.10), transparent 58%);
   filter:blur(140px);
-  z-index:-1;
+  z-index:-2;
 }
-
 body::after{
   content:"";
   position:fixed;
-  bottom:-200px;
-  right:-200px;
-  width:700px;
-  height:700px;
-  background:radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%);
+  bottom:-260px;
+  right:-240px;
+  width:860px;
+  height:860px;
+  background:radial-gradient(circle, rgba(255,255,255,0.04), transparent 55%);
   filter:blur(160px);
-  z-index:-1;
+  z-index:-2;
 }
 
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:underline}
-
-.wrap{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:140px 24px 120px;
-}
-
-/* floating glass nav */
-header{
+/* floating/locked glass nav */
+#navbar{
   position:fixed;
   top:20px;
   left:50%;
   transform:translateX(-50%);
-  width:90%;
-  max-width:1000px;
+  width:92%;
+  max-width:calc(var(--max-width) - 40px);
   display:flex;
-  justify-content:space-between;
   align-items:center;
-  padding:18px 30px;
-  background:var(--glass);
+  justify-content:space-between;
+  gap:24px;
+  padding:16px 22px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
   border:1px solid var(--border);
-  border-radius:20px;
-  backdrop-filter:blur(35px);
+  border-radius:var(--nav-radius);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  box-shadow: 0 6px 30px rgba(0,0,0,0.45);
   z-index:999;
-  transition:0.4s ease;
+  transition: transform 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+  pointer-events:auto;
 }
 
-header.scrolled{
-  backdrop-filter:blur(50px);
-  background:rgba(255,255,255,0.08);
+/* nav when scrolled (slightly stronger) */
+#navbar.scrolled{
+  transform: translateX(-50%) translateY(-6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.025));
+  box-shadow: 0 12px 50px rgba(0,0,0,0.55);
 }
 
-.brand h1{
-  margin:0;
-  font-size:18px;
-  font-weight:600;
-}
-
-.brand span{
-  display:block;
-  font-size:12px;
-  color:var(--muted);
-}
-
-nav{
+/* nav content */
+.brand {
   display:flex;
-  gap:25px;
+  gap:12px;
+  align-items:center;
+}
+.brand .title { font-size:16px; font-weight:700; margin:0; }
+.brand .sub { color:var(--muted); font-size:12px; margin-top:4px; letter-spacing:0.02em; }
+
+/* nav links */
+.nav-links { display:flex; gap:18px; align-items:center; }
+.nav-links a {
+  color:var(--muted);
+  text-decoration:none;
   font-size:12px;
-  letter-spacing:0.15em;
+  letter-spacing:0.14em;
   text-transform:uppercase;
+  transition: color .25s ease, transform .2s ease;
+}
+.nav-links a:hover { color:var(--text); transform:translateY(-2px); }
+
+/* main wrapper — will be pushed down automatically by JS to avoid overlap with fixed nav */
+.wrap{
+  max-width:var(--max-width);
+  margin:0 auto;
+  padding: calc(var(--safe-top) + 20px) 24px 120px;
 }
 
-nav a{color:var(--muted);transition:0.3s}
-nav a:hover{color:var(--text)}
-
-/* hero */
-.hero{
-  max-width:800px;
-  margin:0 auto 120px;
-  text-align:left;
+/* Hero */
+.hero {
+  max-width:920px;
+  margin:0 auto 90px;
 }
-
-.hero h2{
+.hero h1{
+  margin:0 0 18px;
   font-size:44px;
-  margin:0 0 30px;
+  line-height:1.03;
+  font-weight:700;
+  letter-spacing:-0.6px;
 }
+.hero p{ margin:0; color:var(--muted); font-size:16px; max-width:80ch; }
 
-.hero p{
+/* Section headings */
+.section-title {
+  display:block;
   color:var(--muted);
-}
-
-/* sections */
-section{
-  margin-top:120px;
-  transition:filter 0.6s ease, opacity 0.6s ease;
-}
-
-section h3{
   font-size:12px;
-  letter-spacing:0.25em;
+  letter-spacing:0.22em;
   text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:50px;
+  margin:40px 0 26px;
 }
 
-.grid{
+/* grid */
+.grid {
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:50px;
+  gap:32px;
 }
 
-/* glass cards */
-.card{
-  background:linear-gradient(145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border:1px solid var(--border);
-  border-radius:24px;
-  padding:40px;
-  backdrop-filter:blur(40px) saturate(160%);
-  transition:all 0.4s ease;
+/* Card / Liquid Glass */
+.card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.045), rgba(255,255,255,0.02));
+  border: 1px solid var(--border);
+  border-radius:18px;
+  padding:28px;
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  transition: transform .32s cubic-bezier(.2,.9,.3,1), box-shadow .32s ease, border-color .32s ease;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+.card b{display:block; font-size:15px; margin-bottom:12px; font-weight:600; color:var(--text); }
+.card p, .card li { color: var(--muted); margin:8px 0; font-size:14px; }
+
+/* hover */
+.card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(125,162,255,0.45);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.55);
 }
 
-.card:hover{
-  transform:translateY(-8px);
-  border-color:rgba(138,180,255,0.5);
-}
-
-.card b{display:block;margin-bottom:18px;font-weight:600}
-li{margin:10px 0;color:var(--muted)}
-
-/* certification hover glow */
-.cert{
+/* certifications specific */
+.cert {
   display:flex;
   align-items:center;
   gap:20px;
 }
-
-.cert img{
-  width:55px;
-  height:55px;
+.cert img {
+  width:56px;
+  height:56px;
   object-fit:contain;
-  transition:0.4s ease;
+  border-radius:10px;
+  transition: transform .28s ease, filter .28s ease, box-shadow .28s ease;
+}
+.cert:hover img {
+  transform:scale(1.06);
+  filter: drop-shadow(0 10px 20px rgba(125,162,255,0.18));
 }
 
-.cert:hover img{
-  filter:drop-shadow(0 0 12px rgba(138,180,255,0.7));
-  transform:scale(1.05);
-}
-
-iframe{
+/* publications iframe */
+.pub-iframe {
   width:100%;
   height:520px;
-  border:none;
-  border-radius:16px;
-  background:#0c0f14;
-  transition:0.3s ease;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,0.03);
+  background: #07090b;
 }
 
-.card:hover iframe{transform:scale(1.01)}
+/* footer */
+.footer { margin-top:80px; color:var(--muted); font-size:13px; padding-bottom:40px; border-top:1px solid rgba(255,255,255,0.02); }
 
-.footer{
-  margin-top:140px;
-  border-top:1px solid var(--border);
-  padding-top:40px;
-  color:var(--muted);
-  font-size:13px;
+/* fade on scroll */
+.fade { opacity:0; transform:translateY(30px); transition: all .8s cubic-bezier(.2,.9,.3,1); }
+.fade.visible { opacity:1; transform:translateY(0); }
+
+/* responsive tweaks */
+@media (max-width:880px){
+  .hero h1 { font-size:32px; }
+  #navbar { width:96%; left:50%; transform:translateX(-50%); padding:12px 16px; }
 }
 
-/* scroll fade */
-.fade{
-  opacity:0;
-  transform:translateY(50px);
-  transition:all 1s ease;
-}
+/* accessible focus */
+a:focus { outline:2px solid rgba(125,162,255,0.18); outline-offset:4px; border-radius:6px; }
 
-.fade.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* subtle parallax */
-.parallax{
-  transform:translateY(var(--scroll,0));
-  transition:transform 0.2s ease-out;
-}
-
-@keyframes pageFade{
-  to{opacity:1}
-}
-
-@media(max-width:850px){
-  .hero h2{font-size:30px}
-}
 </style>
 </head>
-
 <body>
 
-<header id="navbar">
-  <div class="brand">
-    <h1>Deeptesh Mejari</h1>
-    <span>Investment Strategy • Research • Systems Architecture</span>
+<!-- FIXED NAV -->
+<header id="navbar" role="banner" aria-label="Primary navigation">
+  <div class="brand" aria-hidden="false">
+    <div>
+      <p class="title">Deeptesh Mejari</p>
+      <div class="sub">Investment Strategy · Research · Systems Architecture</div>
+    </div>
   </div>
-  <nav>
+
+  <nav class="nav-links" role="navigation" aria-label="Primary">
     <a href="#bio">Bio</a>
     <a href="#research">Research</a>
     <a href="#systems">Systems</a>
-    <a href="#certifications">Credentials</a>
+    <a href="#credentials">Credentials</a>
+    <a href="#publications">Publications</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
-<div class="wrap">
+<!-- PAGE CONTENT -->
+<div class="wrap" id="main">
 
-<div class="hero parallax">
-  <h2>Structured investment thinking, executed with discipline and system design.</h2>
-  <p>
-  Investment professional operating across public equities and private markets.
-  Combines bottom-up analysis, allocation logic, and AI-enabled workflows
-  to deliver decision-ready clarity.
-  Based in Mumbai. Open to strategy, research, and advisory mandates.
-  </p>
-</div>
+  <!-- HERO -->
+  <section class="hero fade" id="top">
+    <h1>Structured investment thinking, executed with discipline and system design.</h1>
+    <p>
+      Investment professional operating across public equities and private markets.
+      I combine bottom-up financial analysis, allocation logic, and AI-enabled research systems
+      to deliver decision-ready clarity. Based in Mumbai — open to strategy, research, and advisory roles.
+    </p>
+  </section>
 
-<section id="bio" class="fade">
-<h3>Executive Biography</h3>
-<div class="card">
-Investment strategist with experience spanning equity research, private markets evaluation,
-and fund-level operations. Built structured valuation frameworks, portfolio simulations,
-and AI-assisted research systems to enhance decision velocity and analytical depth.
-Bridges financial modeling with enterprise-grade workflow design.
-</div>
-</section>
+  <!-- BIO -->
+  <section id="bio" class="fade">
+    <div class="section-title">Executive biography</div>
+    <div class="card">
+      Investment strategist with blended experience in equity research, private markets evaluation, and fund operations. 
+      I build valuation frameworks, portfolio simulations and AI-assisted research pipelines that improve decision velocity and auditability.
+      My work bridges rigorous financial modeling with enterprise-grade workflow architecture.
+    </div>
+  </section>
 
-<section id="research" class="fade">
-<h3>Research & Advisory Work</h3>
-<div class="grid">
-<div class="card">
-<b>Equity Research & IPO Analysis</b>
-<ul>
-<li>Financial modeling and structured valuation frameworks</li>
-<li>IPO diligence and catalyst mapping</li>
-<li>Regression-backed scenario analysis</li>
-</ul>
-</div>
-<div class="card">
-<b>Private Markets & Allocation Logic</b>
-<ul>
-<li>PE and alternative asset screening</li>
-<li>Downside scenario modeling</li>
-<li>Exposure and drawdown governance</li>
-</ul>
-</div>
-</div>
-</section>
+  <!-- RESEARCH -->
+  <section id="research" class="fade">
+    <div class="section-title">Research & advisory work</div>
+    <div class="grid">
+      <div class="card">
+        <b>Equity research & IPO diligence</b>
+        <ul>
+          <li>Bottom-up modeling and structured valuation frameworks</li>
+          <li>IPO evaluation, management signal synthesis, red-flag mapping</li>
+          <li>Sensitivity & regression-based scenario framing</li>
+        </ul>
+      </div>
 
-<section id="systems" class="fade">
-<h3>Systems Architecture</h3>
-<div class="grid">
-<div class="card">
-<b>AI-Enabled Investment Workflows</b>
-<ul>
-<li>LLM-based financial extraction pipelines</li>
-<li>Portfolio simulation engines</li>
-<li>Prompt engineering for structured insight generation</li>
-</ul>
-</div>
-<div class="card">
-<b>NAV & Fund Governance</b>
-<ul>
-<li>Investor-level NAV computation</li>
-<li>Reconciliation frameworks</li>
-<li>MIS reporting architecture</li>
-</ul>
-</div>
-</div>
-</section>
+      <div class="card">
+        <b>Private markets & portfolio structuring</b>
+        <ul>
+          <li>Private equity screening and return-driver isolation</li>
+          <li>Downside scenario analysis and exposure governance</li>
+          <li>Investor-ready summary outputs and decision notes</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section id="certifications" class="fade">
-<h3>Credentials & Programs</h3>
-<div class="grid">
-<div class="card cert">
-<img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/McKinsey_%26_Company_logo.svg">
-<div><b>McKinsey Forward Learning Program</b></div>
-</div>
-<div class="card cert">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg">
-<div><b>IBM Data Science</b></div>
-</div>
-<div class="card cert">
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
-<div><b>Google Data Foundations</b></div>
-</div>
-</div>
-</section>
-<section id="publications" class="fade">
-<h3>Research & Publications</h3>
+  <!-- SYSTEMS -->
+  <section id="systems" class="fade">
+    <div class="section-title">Systems & execution architecture</div>
+    <div class="grid">
+      <div class="card">
+        <b>AI-enabled research workflows</b>
+        <ul>
+          <li>LLM-based document extraction & insight pipelines</li>
+          <li>Prompt engineering for repeatable outputs</li>
+          <li>Portfolio simulation engines and risk-adjusted outputs</li>
+        </ul>
+      </div>
 
-<div class="grid">
+      <div class="card">
+        <b>NAV, MIS & fund governance</b>
+        <ul>
+          <li>Investor-level NAV computation and reconciliation discipline</li>
+          <li>Statement-of-accounts templates and MIS architecture</li>
+          <li>Control frameworks aligned to investment decision cycles</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<div class="card">
-<b>Resume</b>
-<iframe src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank">
-Download Resume (PDF)
-</a>
-</div>
+  <!-- CREDENTIALS -->
+  <section id="credentials" class="fade">
+    <div class="section-title">Credentials & executive programs</div>
 
-<div class="card">
-<b>Alternative Investments Research Paper I</b>
-<iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
-</div>
+    <div class="grid">
+      <!-- Palantir -->
+      <div class="card cert" title="Introduction to Foundry & AIP — Palantir">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Palantir_Technologies_logo.svg" alt="Palantir logo" onerror="this.style.display='none'">
+        <div>
+          <b>Introduction to Foundry & AIP for Enterprise Organizations</b>
+          <p style="margin:6px 0 0; color:var(--muted);">Palantir Technologies</p>
+        </div>
+      </div>
 
-<div class="card">
-<b>Alternative Investments Research Paper II</b>
-<iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
-</div>
+      <!-- McKinsey -->
+      <div class="card cert" title="McKinsey Forward Learning Program">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/McKinsey_%26_Company_logo.svg" alt="McKinsey logo" onerror="this.style.display='none'">
+        <div>
+          <b>McKinsey Forward Learning Program</b>
+          <p style="margin:6px 0 0; color:var(--muted);">McKinsey & Company</p>
+        </div>
+      </div>
 
-</div>
-</section>
+      <!-- Google -->
+      <div class="card cert" title="Google Data Foundations / Gen AI">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google logo" onerror="this.style.display='none'">
+        <div>
+          <b>Foundations: Data & Gen-AI Principles</b>
+          <p style="margin:6px 0 0; color:var(--muted);">Google</p>
+        </div>
+      </div>
 
-<section id="contact" class="fade">
-<h3>Contact</h3>
-<div class="card">
-Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
-Location: Mumbai<br><br>
-LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">linkedin.com/in/deeptesh-mejari</a>
-</div>
-</section>
+      <!-- IBM -->
+      <div class="card cert" title="IBM Data Science">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM logo" onerror="this.style.display='none'">
+        <div>
+          <b>Data Science</b>
+          <p style="margin:6px 0 0; color:var(--muted);">IBM</p>
+        </div>
+      </div>
 
-<div class="footer">
-© <span id="year"></span> Deeptesh Mejari
-</div>
+      <!-- Coursera -->
+      <div class="card cert" title="Coursera — Fundamental & Technical Analysis">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/20/Coursera_logo.svg" alt="Coursera logo" onerror="this.style.display='none'">
+        <div>
+          <b>Fundamental & Technical Analysis</b>
+          <p style="margin:6px 0 0; color:var(--muted);">Coursera</p>
+        </div>
+      </div>
 
-</div>
+      <!-- JPMC -->
+      <div class="card cert" title="J.P. Morgan Global Finance">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/JPMorgan_Chase_logo.svg" alt="JPMorgan Chase logo" onerror="this.style.display='none'">
+        <div>
+          <b>Global Finance</b>
+          <p style="margin:6px 0 0; color:var(--muted);">JPMorgan Chase</p>
+        </div>
+      </div>
+
+      <!-- Citi -->
+      <div class="card cert" title="Citi — Investment Banking Certification">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Citi_logo.svg" alt="Citi logo" onerror="this.style.display='none'">
+        <div>
+          <b>Investment Banking Certification</b>
+          <p style="margin:6px 0 0; color:var(--muted);">Citi</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS (Resume + Research previews) -->
+  <section id="publications" class="fade">
+    <div class="section-title">Research & publications</div>
+
+    <div class="grid">
+      <div class="card">
+        <b>Resume — Preview</b>
+        <!-- Replace link only if you want a different resume; this one was shared earlier -->
+        <iframe class="pub-iframe" src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview" title="Resume preview"></iframe>
+        <div style="margin-top:12px;">
+          <a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank" rel="noreferrer">Download Resume (PDF)</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <b>Alternative Investments — Paper I</b>
+        <iframe class="pub-iframe" src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview" title="Research paper 1"></iframe>
+        <div style="margin-top:12px;">
+          <a href="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/view" target="_blank" rel="noreferrer">Download Research Paper I</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <b>Alternative Investments — Paper II</b>
+        <iframe class="pub-iframe" src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview" title="Research paper 2"></iframe>
+        <div style="margin-top:12px;">
+          <a href="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/view" target="_blank" rel="noreferrer">Download Research Paper II</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="fade">
+    <div class="section-title">Contact</div>
+    <div class="card">
+      <p style="margin:0 0 10px;"><strong>Email:</strong> <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a></p>
+      <p style="margin:0 0 10px;"><strong>Phone:</strong> +91 73041 29138</p>
+      <p style="margin:0 0 10px;"><strong>Location:</strong> Mumbai</p>
+      <p style="margin:0;"><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank" rel="noreferrer">linkedin.com/in/deeptesh-mejari</a></p>
+    </div>
+  </section>
+
+  <div class="footer">
+    © <span id="year"></span> Deeptesh Mejari — Investment Strategy & Research
+  </div>
+
+</div> <!-- /wrap -->
 
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
+/* ------------- helper: set safe top offset so fixed nav doesn't overlap content ------------- */
+function setSafeTop(){
+  const navbar = document.getElementById('navbar');
+  const rect = navbar.getBoundingClientRect();
+  const safe = Math.ceil(rect.height + rect.top + 18); // header height + margin
+  document.documentElement.style.setProperty('--safe-top', safe + 'px');
+  // also make sure wrap padding reflects it (fallback already uses var)
+}
+window.addEventListener('load', setSafeTop);
+window.addEventListener('resize', setSafeTop);
+window.addEventListener('orientationchange', setSafeTop);
 
-/* nav blur on scroll */
-window.addEventListener("scroll",()=>{
-  if(window.scrollY>40){
-    document.getElementById("navbar").classList.add("scrolled");
-  }else{
-    document.getElementById("navbar").classList.remove("scrolled");
-  }
-});
-
-/* fade observer */
-const faders=document.querySelectorAll('.fade');
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
+/* ------------- fade-in intersection observer ------------- */
+const faders = () => document.querySelectorAll('.fade');
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting) e.target.classList.add('visible');
   });
-});
-faders.forEach(el=>observer.observe(el));
+},{ threshold: 0.18 });
+window.addEventListener('load', ()=> faders().forEach(el => observer.observe(el)));
 
-/* subtle parallax */
-window.addEventListener("scroll",()=>{
-  document.querySelectorAll('.parallax').forEach(el=>{
-    el.style.setProperty('--scroll', window.scrollY * -0.05 + "px");
-  });
+/* ------------- nav visual change on scroll ------------- */
+window.addEventListener('scroll', ()=>{
+  const navbar = document.getElementById('navbar');
+  if(window.scrollY > 30) navbar.classList.add('scrolled');
+  else navbar.classList.remove('scrolled');
 });
+
+/* ------------- year ------------- */
+document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
 </body>
 </html>
-
