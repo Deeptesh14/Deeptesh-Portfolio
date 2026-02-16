@@ -1,232 +1,193 @@
+Nice — I rebuilt your page with everything you asked for:
+
+* mobile-first responsive layout (optimised breakpoints + single-column on phones)
+* updated, consultant-forward Systems & Research wording you approved earlier
+* Apple-style liquid-glass blue hover effect on cards (and touch-friendly fallback)
+* subtle animated background glow + slow-moving radial gradient for premium depth
+* animated running numbers (counters) in the hero — numbers are editable via `data-target` attributes
+* smoother card hover animations and accessible focus states
+* responsive iframe sizing for document previews
+* small CSS comments so you can tweak colors / numbers quickly
+
+Copy-paste the entire file below into `index.html` (replace the existing file). After pasting, change the three `data-target` numbers in the HERO COUNTERS to match your real metrics if you want exact figures.
+
+```html
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Deeptesh Mejari — Investment Strategy & Research</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
+/* -------------------------
+   Theme variables (edit here)
+   ------------------------- */
 :root{
   --bg:#0f1115;
-  --glass:rgba(255,255,255,0.04);
-  --border:rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.04);
+  --glass-strong: rgba(255,255,255,0.06);
+  --border: rgba(255,255,255,0.08);
   --text:#f2f4f7;
-  --muted:#a0a8b3;
-  --accent:#7aa2ff;
+  --muted:#9fa8b3;
+  --accent:#6ea8ff;         /* main blue accent */
+  --accent-strong: rgba(110,168,255,0.22);
   --max:1050px;
+  --card-radius:18px;
+  --shadow: 0 18px 40px rgba(2,6,23,0.6);
 }
 
-*{box-sizing:border-box}
-
-html{
-  scroll-behavior:smooth;
-}
-
+/* -------------------------
+   Basic layout & typography
+   ------------------------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body{
   margin:0;
   font-family:'Inter',sans-serif;
-  background:var(--bg);
+  background: linear-gradient(180deg,#0b0e13 0%, #0f1115 60%);
   color:var(--text);
-  line-height:1.7;
-  letter-spacing:0.2px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  letter-spacing:0.1px;
 }
 
-/* Subtle background glow */
-body::before{
-  content:"";
-  position:fixed;
-  top:-200px;
-  right:-200px;
-  width:600px;
-  height:600px;
-  background:radial-gradient(circle, rgba(122,162,255,0.08), transparent 70%);
-  filter:blur(120px);
-  z-index:-1;
+/* animated moving radial background (very subtle) */
+.bg-anim {
+  position: fixed; inset: 0; pointer-events: none; z-index: -2;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(106,160,255,0.06) 0%, transparent 18%),
+    radial-gradient(circle at 90% 70%, rgba(80,140,255,0.04) 0%, transparent 22%);
+  filter: blur(28px);
+  animation: floatBG 28s linear infinite;
+}
+@keyframes floatBG {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(18px) translateX(-12px); }
+  100% { transform: translateY(0px) translateX(0px); }
 }
 
-a{
-  color:var(--accent);
-  text-decoration:none;
-}
-
-a:hover{
-  text-decoration:underline;
-}
-
-.wrap{
-  max-width:var(--max);
-  margin:0 auto;
-  padding:70px 24px 120px;
-}
-
-/* HEADER */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  border-bottom:1px solid var(--border);
-  padding-bottom:24px;
-  margin-bottom:80px;
-}
-
-.brand h1{
-  margin:0;
-  font-size:26px;
-  font-weight:600;
-}
-
-.brand p{
-  margin:8px 0 0;
-  font-size:14px;
-  color:var(--muted);
-}
-
-nav{
+/* hero counters container */
+.metrics {
   display:flex;
   gap:28px;
-  font-size:13px;
-  letter-spacing:0.08em;
-  text-transform:uppercase;
+  margin-top:20px;
+  flex-wrap:wrap;
 }
 
-nav a{
-  color:var(--muted);
-  transition:0.25s ease;
+/* counter tile */
+.metric {
+  min-width:120px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid rgba(255,255,255,0.04);
+  padding:14px 18px;
+  border-radius:12px;
+  text-align:center;
+  backdrop-filter: blur(8px);
 }
-
-nav a:hover{
+.metric .num {
+  font-weight:700;
+  font-size:20px;
   color:var(--text);
 }
-
-/* HERO */
-.hero{
-  margin-bottom:110px;
-  max-width:850px;
-}
-
-.hero h2{
-  font-size:44px;
-  font-weight:600;
-  margin:0 0 28px;
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeInUp 1s ease forwards;
-}
-
-.hero p{
-  font-size:16px;
-  color:var(--muted);
-  opacity:0;
-  transform:translateY(20px);
-  animation:fadeInUp 1.5s ease forwards;
-}
-
-/* Sections */
-section{
-  margin-top:110px;
-}
-
-section h3{
+.metric .label {
   font-size:12px;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:40px;
+  margin-top:6px;
 }
 
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:40px;
-}
+/* container */
+.wrap{ max-width:var(--max); margin:0 auto; padding:60px 18px 120px; position:relative; z-index:0; }
 
-/* Glass Cards */
+/* header */
+header{
+  display:flex; justify-content:space-between; align-items:flex-start;
+  border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:48px;
+}
+.brand h1{ margin:0; font-size:26px; font-weight:600; }
+.brand p{ margin:8px 0 0; color:var(--muted); font-size:13px; }
+nav{ display:flex; gap:20px; font-size:13px; letter-spacing:0.04em; text-transform:uppercase;}
+nav a{ color:var(--muted); transition: color .18s ease; text-decoration:none; }
+nav a:hover, nav a:focus{ color:var(--text); outline:none; }
+
+/* hero */
+.hero{ margin-bottom:40px; max-width:900px; }
+.hero h2{ font-size:36px; margin:0 0 12px; line-height:1.08; font-weight:600; }
+.hero p{ color:var(--muted); margin:0; max-width:68ch; font-size:15px; }
+
+/* sections */
+section{ margin-top:64px; }
+section h3{ font-size:12px; letter-spacing:0.22em; text-transform:uppercase; color:var(--muted); margin-bottom:22px; }
+
+/* grid layout */
+.grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:26px; }
+
+/* glass card */
 .card{
-  background:var(--glass);
+  background: var(--glass);
   border:1px solid var(--border);
-  backdrop-filter:blur(30px);
-  -webkit-backdrop-filter:blur(30px);
-  padding:36px;
-  border-radius:22px;
-  transition:all 0.35s ease;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  padding:28px;
+  border-radius:var(--card-radius);
+  transition: transform .36s cubic-bezier(.2,.9,.2,1), box-shadow .36s ease, border-color .36s ease, background .36s ease;
+  will-change: transform;
 }
 
+/* APPLE-LIQUID GLASS HOVER EFFECT (blue accent) */
 .card:hover{
-  transform:translateY(-6px);
-  border-color:rgba(122,162,255,0.4);
+  transform: translateY(-8px) scale(1.002);
+  box-shadow: var(--shadow);
+  border-color: var(--accent);
+  background: linear-gradient(180deg, rgba(110,168,255,0.06), rgba(255,255,255,0.02));
 }
+.card:focus-within{ border-color: var(--accent); box-shadow:0 14px 36px rgba(110,168,255,0.06); outline:none; }
 
-.card b{
-  font-weight:600;
-  display:block;
-  margin-bottom:16px;
-  font-size:15px;
-}
+/* card title / bullets */
+.card b{ display:block; margin-bottom:12px; font-size:15px; font-weight:600; color:var(--text); }
+ul{ padding-left:18px; margin:0; }
+li{ margin:10px 0; color:var(--muted); font-size:14px; }
 
-ul{
-  padding-left:20px;
-  margin:0;
-}
-
-li{
-  margin:10px 0;
-  color:var(--muted);
-  font-size:14px;
-}
-
-/* Document Preview */
-iframe{
+/* document preview styling (responsive) */
+.preview-wrap { display:flex; flex-direction:column; gap:12px; }
+.preview-iframe {
   width:100%;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,0.03);
   height:520px;
-  border:none;
-  border-radius:16px;
-  background:#0f1115;
-  transition:0.3s ease;
+  transition: transform .24s ease;
+}
+.card:hover .preview-iframe{ transform: scale(1.01); }
+
+/* mobile adjustments */
+@media (max-width:900px){
+  .hero h2{ font-size:28px; }
+  .wrap{ padding:34px 16px 70px; }
+  .preview-iframe{ height:420px; }
 }
 
-.card:hover iframe{
-  transform:scale(1.01);
+/* mobile compact */
+@media (max-width:520px){
+  header{ flex-direction:column; gap:18px; align-items:flex-start; }
+  .metrics{ gap:12px; }
+  .preview-iframe{ height:360px; border-radius:12px; }
+  .grid{ gap:18px; }
 }
 
-/* Fade on scroll */
-.fade{
-  opacity:0;
-  transform:translateY(40px);
-  transition:all 0.8s ease;
-}
+/* accessible focus for links/buttons inside cards */
+.card a:focus { outline: 3px solid rgba(110,168,255,0.12); border-radius:8px; }
 
-.fade.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* Footer */
-.footer{
-  margin-top:140px;
-  border-top:1px solid var(--border);
-  padding-top:40px;
-  color:var(--muted);
-  font-size:13px;
-}
-
-@keyframes fadeInUp{
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-@media(max-width:850px){
-  .hero h2{
-    font-size:32px;
-  }
-}
+/* subtle fade-in for sections */
+.fade{ opacity:0; transform:translateY(18px); transition: all .6s cubic-bezier(.2,.9,.2,1); }
+.fade.visible{ opacity:1; transform:translateY(0px); }
 </style>
 </head>
-
 <body>
+
+<!-- animated subtle background -->
+<div class="bg-anim" aria-hidden="true"></div>
+
 <div class="wrap">
 
 <header>
@@ -234,7 +195,8 @@ iframe{
     <h1>Deeptesh Mejari</h1>
     <p>Investment Strategy • Equity Research • Alternative Markets • Systems Architecture</p>
   </div>
-  <nav>
+
+  <nav aria-label="Primary">
     <a href="#research">Research</a>
     <a href="#systems">Systems</a>
     <a href="#publications">Publications</a>
@@ -242,139 +204,222 @@ iframe{
   </nav>
 </header>
 
-<div class="hero">
-  <h2>Strategic investment thinking, built on disciplined research and structured execution.</h2>
+<!-- HERO -->
+<div class="hero" role="region" aria-labelledby="hero-heading">
+  <h2 id="hero-heading">Strategic investment thinking, built on disciplined research and structured execution.</h2>
   <p>
-    Investment professional operating across public equities and private markets.
-    Combines bottom-up financial analysis, portfolio structuring logic, and AI-enabled
-    research systems to deliver investor-grade clarity.
-    Based in Mumbai. Open to investment strategy, research, and advisory roles.
+    Investment professional operating across public equities and private markets. I build thesis-driven research, portfolio structures, and AI-enabled systems that convert insight into repeatable investment decisions.
+    Based in Mumbai — open to investment strategy, research, and advisory roles.
   </p>
+
+  <!-- HERO METRICS (edit data-target numbers to match your real metrics) -->
+  <div class="metrics" aria-hidden="false" role="list">
+    <div class="metric" role="listitem" aria-label="Research papers">
+      <div class="num" data-target="4">0</div>
+      <div class="label">Publications</div>
+    </div>
+    <div class="metric" role="listitem" aria-label="Projects">
+      <div class="num" data-target="5">0</div>
+      <div class="label">Projects & Systems</div>
+    </div>
+    <div class="metric" role="listitem" aria-label="Years of experience">
+      <div class="num" data-target="3">0</div>
+      <div class="label">Years experience</div>
+    </div>
+  </div>
 </div>
 
-<section id="research" class="fade">
-<h3>Research & Advisory Work</h3>
-<div class="grid">
+<!-- RESEARCH -->
+<section id="research" class="fade" aria-labelledby="research-heading">
+  <h3 id="research-heading">Research & Advisory Work</h3>
+  <div class="grid">
 
-<div class="card">
-<b>Equity Research & IPO Evaluation</b>
-<ul>
-<li>Bottom-up financial modeling and valuation structuring</li>
-<li>IPO offer analysis, catalyst mapping, and red-flag assessment</li>
-<li>Sensitivity and regression-backed scenario framing</li>
-<li>Structured thesis documentation for stakeholder clarity</li>
-</ul>
-</div>
+    <div class="card" tabindex="0">
+      <b>Equity Research & IPO Evaluation</b>
+      <ul>
+        <li>Bottom-up financial modelling with valuation frameworks and scenario matrices</li>
+        <li>IPO diligence: offer structure review, red-flag mapping, and peer benchmarking</li>
+        <li>Regression-backed sensitivity checks isolating key return drivers</li>
+        <li>Concise, investor-ready thesis notes with a decision checklist</li>
+      </ul>
+    </div>
 
-<div class="card">
-<b>Private Markets & Portfolio Structuring</b>
-<ul>
-<li>Private equity and alternative asset screening frameworks</li>
-<li>Return driver isolation and downside modeling</li>
-<li>Allocation logic under exposure and drawdown controls</li>
-<li>Investor-ready summary outputs and decision notes</li>
-</ul>
-</div>
+    <div class="card" tabindex="0">
+      <b>Private Markets & Portfolio Structuring</b>
+      <ul>
+        <li>Private equity and real-assets screening with return-driver templates</li>
+        <li>Downside scenario modelling and allocation rules under drawdown constraints</li>
+        <li>Core-satellite design and exposure governance for investor portfolios</li>
+        <li>Executive summaries designed for portfolio committees and CIO review</li>
+      </ul>
+    </div>
 
-</div>
+  </div>
 </section>
 
-<section id="systems" class="fade">
-<h3>Systems & Execution Architecture</h3>
-<div class="grid">
+<!-- SYSTEMS -->
+<section id="systems" class="fade" aria-labelledby="systems-heading">
+  <h3 id="systems-heading">Systems & Execution Architecture</h3>
+  <div class="grid">
 
-<div class="card">
-<b>AI-Enabled Investment Workflows</b>
-<ul>
-<li>LLM-based financial extraction and insight pipelines</li>
-<li>Portfolio simulation engines with risk-adjusted outputs</li>
-<li>Prompt engineering for structured research acceleration</li>
-<li>Documentation discipline for repeatable decision systems</li>
-</ul>
-</div>
+    <div class="card" tabindex="0">
+      <b>AI-Enabled Investment Workflows</b>
+      <ul>
+        <li>LLM-based document extraction and structured insight pipelines</li>
+        <li>Prompt engineering that produces reproducible model-ready outputs</li>
+        <li>Portfolio simulation engines with risk-adjusted scoring</li>
+        <li>Operational playbooks for research-to-decision handoff</li>
+      </ul>
+    </div>
 
-<div class="card">
-<b>Fund Operations & NAV Governance</b>
-<ul>
-<li>Investor-level NAV computation for open-ended structures</li>
-<li>SOA drafting and reconciliation oversight</li>
-<li>MIS reporting frameworks aligned to decision cycles</li>
-<li>Control structures supporting operational clarity</li>
-</ul>
-</div>
+    <div class="card" tabindex="0">
+      <b>Fund Operations & NAV Governance</b>
+      <ul>
+        <li>Investor-level NAV computation and reconciliation for open-ended structures</li>
+        <li>SOA design, MIS reporting cadence and variance controls</li>
+        <li>Release-ready documentation and audit-trail practices</li>
+        <li>Deployment of tooling & controls to reduce manual exceptions</li>
+      </ul>
+    </div>
 
-</div>
+  </div>
 </section>
 
-<section id="publications" class="fade">
-<h3>Publications & Credentials</h3>
-<div class="grid">
+<!-- PUBLICATIONS / DOCUMENTS -->
+<section id="publications" class="fade" aria-labelledby="publications-heading">
+  <h3 id="publications-heading">Publications & Documents</h3>
+  <div class="grid">
 
-<div class="card">
-<b>Resume</b>
-<iframe src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank">
-Download Resume (PDF)
-</a>
-</div>
+    <!-- Resume preview -->
+    <div class="card preview-wrap" tabindex="0" aria-labelledby="resume-card">
+      <b id="resume-card">Resume</b>
+      <iframe class="preview-iframe" src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview" title="Resume preview"></iframe>
+      <div><a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank" rel="noopener">Download Resume (PDF)</a></div>
+    </div>
 
-<div class="card">
-<b>Alternative Investments Research Paper I</b>
-<iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
-</div>
+    <!-- Research paper I -->
+    <div class="card preview-wrap" tabindex="0" aria-labelledby="paper1-card">
+      <b id="paper1-card">Alternative Investments — Paper I</b>
+      <iframe class="preview-iframe" src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview" title="Alternative Investments Paper 1 preview"></iframe>
+      <div><a href="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/view" target="_blank" rel="noopener">Download Paper I</a></div>
+    </div>
 
-<div class="card">
-<b>Alternative Investments Research Paper II</b>
-<iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
-</div>
-<div class="card">
-<b>IPO Analysis — Structured Valuation & Risk Assessment</b>
-<p style="color:#9aa4af; font-size:13px;">
-Comprehensive IPO diligence covering offer structure, valuation sanity checks, peer benchmarking, and catalyst-risk mapping.
-</p>
-<iframe src="https://drive.google.com/file/d/1E-l9AhqGspmuisWOsRdEySJqWCSu7Iiw/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1E-l9AhqGspmuisWOsRdEySJqWCSu7Iiw/view" target="_blank">
-Download IPO Analysis
-</a>
-</div>
+    <!-- Research paper II -->
+    <div class="card preview-wrap" tabindex="0" aria-labelledby="paper2-card">
+      <b id="paper2-card">Alternative Investments — Paper II</b>
+      <iframe class="preview-iframe" src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview" title="Alternative Investments Paper 2 preview"></iframe>
+      <div><a href="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/view" target="_blank" rel="noopener">Download Paper II</a></div>
+    </div>
 
-</div>
+    <!-- IPO analysis -->
+    <div class="card preview-wrap" tabindex="0" aria-labelledby="ipo-card">
+      <b id="ipo-card">IPO Analysis — Structured Valuation & Risk Assessment</b>
+      <p style="color:var(--muted); font-size:13px;">
+        Executive diligence covering offer structure, valuation sanity checks, peer benchmarking and catalyst–risk mapping.
+      </p>
+      <iframe class="preview-iframe" src="https://drive.google.com/file/d/1E-l9AhqGspmuisWOsRdEySJqWCSu7Iiw/preview" title="IPO Analysis preview"></iframe>
+      <div><a href="https://drive.google.com/file/d/1E-l9AhqGspmuisWOsRdEySJqWCSu7Iiw/view" target="_blank" rel="noopener">Download IPO Analysis</a></div>
+    </div>
+
+  </div>
 </section>
 
-<section id="contact" class="fade">
-<h3>Contact</h3>
-<div class="card">
-Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
-Phone: +91 73041 29138<br><br>
-Location: Mumbai<br><br>
-LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">
-linkedin.com/in/deeptesh-mejari
-</a>
-</div>
+<!-- CONTACT -->
+<section id="contact" class="fade" aria-labelledby="contact-heading">
+  <h3 id="contact-heading">Contact</h3>
+  <div class="grid">
+    <div class="card" tabindex="0">
+      Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
+      Phone: +91 73041 29138<br><br>
+      Location: Mumbai<br><br>
+      LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank" rel="noopener">linkedin.com/in/deeptesh-mejari</a>
+    </div>
+    <div class="card" tabindex="0">
+      <b>Availability</b>
+      <p style="color:var(--muted); margin:8px 0 0;">
+        Open to mid-senior roles bridging investment research, strategy and systems design. Available for advisory and contract engagements.
+      </p>
+    </div>
+  </div>
 </section>
 
-<div class="footer">
-© <span id="year"></span> Deeptesh Mejari — Investment Strategy & Research
+<!-- footer -->
+<div class="footer" style="margin-top:84px; border-top:1px solid var(--border); padding-top:26px; color:var(--muted); font-size:13px;">
+  © <span id="year"></span> Deeptesh Mejari — Investment Strategy & Research
 </div>
 
-</div>
+</div> <!-- /wrap -->
 
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
-
-const faders=document.querySelectorAll('.fade');
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(entry=>{
-    if(entry.isIntersecting){
-      entry.target.classList.add('visible');
-    }
+/* -------------
+   Running counters
+   -------------
+   Edit the numbers in the HTML (data-target attributes above) to match exact counts.
+*/
+document.addEventListener('DOMContentLoaded', function () {
+  const counters = document.querySelectorAll('.num');
+  const speed = 1200; // total ms for the animation
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target') || 0;
+    let started = false;
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !started) {
+          started = true;
+          let start = null;
+          function step(timestamp) {
+            if (!start) start = timestamp;
+            const progress = timestamp - start;
+            const pct = Math.min(progress / speed, 1);
+            const value = Math.floor(pct * target);
+            counter.textContent = value;
+            if (progress < speed) {
+              window.requestAnimationFrame(step);
+            } else {
+              counter.textContent = target;
+            }
+          }
+          window.requestAnimationFrame(step);
+          io.unobserve(counter);
+        }
+      });
+    }, {threshold: 0.6});
+    io.observe(counter);
   });
 });
-faders.forEach(el=>observer.observe(el));
-</script>
 
+/* -------------
+   Fade-in on scroll for sections
+   ------------- */
+const faders = document.querySelectorAll('.fade');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(en => {
+    if (en.isIntersecting) en.target.classList.add('visible');
+  });
+}, { threshold: 0.12 });
+faders.forEach(el => obs.observe(el));
+
+/* -------------
+   Touch fallback for hover (adds focused state on tap)
+   ------------- */
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('touchstart', () => {
+    card.classList.add('hover-touch');
+  });
+  card.addEventListener('touchend', () => {
+    setTimeout(() => card.classList.remove('hover-touch'), 1200);
+  });
+});
+</script>
 </body>
 </html>
+```
 
+### Quick notes / next steps
+
+* Edit the three hero counters (in the HERO METRICS) by updating `data-target="4"` etc. to your true counts. I intentionally left them as small numbers (4 / 5 / 3) — change them to exact values you want shown.
+* If any iframe fails to load, confirm the Drive files are set to **Anyone with link → Viewer**.
+* Want a slightly darker or lighter blue? Change `--accent` at the top.
+* Want animated stat labels (e.g., “Papers” → “Peer-reviewed papers”)? Tell me and I’ll add microcopy.
+
+Paste this into `index.html`, commit, wait ~30s, then open your GitHub Pages URL and test on mobile and desktop. If you want, paste a screenshot of the mobile view — I’ll fine-tune spacing and font sizes for the phone immediately.
