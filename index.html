@@ -3,132 +3,172 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Deeptesh Mejari — Investment Research & Systems Strategy</title>
+<title>Deeptesh Mejari — Investment Strategy & Research</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg: #0e1117;
-  --card: #161b22;
-  --text: #e6edf3;
-  --muted: #9da7b3;
-  --line: #30363d;
-  --accent: #58a6ff;
-  --max: 1000px;
+:root{
+  --bg:#0b0f14;
+  --glass:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.08);
+  --text:#e6edf3;
+  --muted:#9aa4af;
+  --accent:#58a6ff;
+  --max:1100px;
 }
 
-* { box-sizing: border-box; }
+*{box-sizing:border-box}
 
-body {
-  margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  line-height: 1.6;
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  line-height:1.65;
 }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-.wrap {
-  max-width: var(--max);
-  margin: 0 auto;
-  padding: 40px 20px 80px;
+a{
+  color:var(--accent);
+  text-decoration:none;
 }
 
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 18px;
-  margin-bottom: 40px;
+a:hover{
+  text-decoration:underline;
 }
 
-.brand h1 {
-  margin: 0;
-  font-size: 24px;
+.wrap{
+  max-width:var(--max);
+  margin:0 auto;
+  padding:60px 20px 100px;
 }
 
-.brand p {
-  margin: 6px 0 0;
-  color: var(--muted);
-  font-size: 14px;
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  border-bottom:1px solid var(--border);
+  padding-bottom:20px;
+  margin-bottom:60px;
 }
 
-nav {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
+.brand h1{
+  margin:0;
+  font-size:26px;
+  font-weight:600;
 }
 
-nav a { color: var(--muted); }
-nav a:hover { color: var(--text); }
-
-.hero {
-  margin-bottom: 50px;
+.brand p{
+  margin:8px 0 0;
+  font-size:14px;
+  color:var(--muted);
 }
 
-.hero h2 {
-  font-size: 36px;
-  line-height: 1.2;
-  margin: 0 0 15px;
+nav{
+  display:flex;
+  gap:20px;
+  font-size:13px;
 }
 
-.hero p {
-  color: var(--muted);
-  max-width: 650px;
+nav a{
+  color:var(--muted);
+  transition:0.2s ease;
 }
 
-section {
-  margin-top: 60px;
+nav a:hover{
+  color:var(--text);
 }
 
-section h3 {
-  font-size: 13px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 20px;
+.hero{
+  margin-bottom:80px;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 18px;
+.hero h2{
+  font-size:40px;
+  font-weight:600;
+  margin:0 0 20px;
+  max-width:850px;
 }
 
-.card {
-  background: var(--card);
-  border: 1px solid var(--line);
-  padding: 18px;
-  border-radius: 12px;
-  transition: all 0.2s ease;
+.hero p{
+  color:var(--muted);
+  max-width:700px;
 }
 
-.card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+section{
+  margin-top:80px;
 }
 
-ul {
-  margin: 10px 0 0;
-  padding-left: 18px;
+section h3{
+  font-size:13px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:30px;
 }
 
-li { margin: 6px 0; }
-
-footer {
-  margin-top: 80px;
-  border-top: 1px solid var(--line);
-  padding-top: 20px;
-  color: var(--muted);
-  font-size: 13px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:30px;
 }
 
-@media (max-width: 850px) {
-  .grid { grid-template-columns: 1fr; }
+.card{
+  background:var(--glass);
+  border:1px solid var(--border);
+  backdrop-filter:blur(14px);
+  padding:28px;
+  border-radius:16px;
+  transition:all 0.35s ease;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(88,166,255,0.5);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+
+.card b{
+  font-weight:600;
+  display:block;
+  margin-bottom:12px;
+}
+
+ul{
+  padding-left:18px;
+  margin:0;
+}
+
+li{
+  margin:8px 0;
+  color:var(--muted);
+}
+
+iframe{
+  width:100%;
+  height:500px;
+  border:none;
+  border-radius:12px;
+  background:#0b0f14;
+  transition:0.3s ease;
+}
+
+.card:hover iframe{
+  transform:scale(1.01);
+}
+
+.footer{
+  margin-top:120px;
+  border-top:1px solid var(--border);
+  padding-top:30px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+@media(max-width:850px){
+  .hero h2{
+    font-size:30px;
+  }
 }
 </style>
 </head>
@@ -139,46 +179,47 @@ footer {
 <header>
   <div class="brand">
     <h1>Deeptesh Mejari</h1>
-    <p>Private Markets • Equity Research • AI Systems</p>
+    <p>Investment Strategy • Equity Research • Alternative Markets • Systems Design</p>
   </div>
   <nav>
-    <a href="#equity">Research</a>
+    <a href="#research">Research</a>
     <a href="#systems">Systems</a>
-    <a href="#experience">Experience</a>
-    <a href="#resume">Resume</a>
+    <a href="#documents">Publications</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <div class="hero">
-  <h2>Research discipline. Structured execution. Investor-grade clarity.</h2>
+  <h2>Strategic investment thinking supported by disciplined research and structured execution.</h2>
   <p>
-    Private Market & Gen-AI Analyst at a Global Alternative Investment Fund.
-    Background in equity research, NAV systems, and AI-assisted portfolio simulation.
-    I build clean investment theses — and the workflows that make them repeatable.
+    Investment professional operating across public equities and private markets.
+    Combines bottom-up financial analysis, portfolio structuring logic, and AI-enabled
+    research workflows to deliver investor-grade clarity.
+    Based in Mumbai. Open to investment strategy, research, and systems-oriented roles.
   </p>
 </div>
 
-<section id="equity">
-<h3>Equity Research</h3>
+<section id="research">
+<h3>Equity & Private Markets Research</h3>
 <div class="grid">
 
 <div class="card">
-<b>Buy / Sell / Hold Coverage — Ativir Securities</b>
+<b>Equity Research & IPO Diligence</b>
 <ul>
-<li>Financial statement breakdown & regression-based stock analysis</li>
-<li>IPO research & application review</li>
-<li>Portfolio rebalancing & stakeholder reviews</li>
-<li>SEBI compliance context (QCR – Cat I updates)</li>
+<li>Bottom-up financial statement analysis and valuation discipline</li>
+<li>IPO offer structure evaluation and catalyst mapping</li>
+<li>Regression-backed sensitivity frameworks</li>
+<li>Risk partitioning and structured thesis documentation</li>
 </ul>
 </div>
 
 <div class="card">
-<b>Portfolio & Risk Analytics</b>
+<b>Private Markets & Portfolio Evaluation</b>
 <ul>
-<li>Drawdown monitoring & exposure management</li>
-<li>Core-satellite allocation frameworks</li>
-<li>Thesis → catalyst → risk register structuring</li>
+<li>Private equity and alternative asset screening</li>
+<li>Return driver isolation and downside scenario modeling</li>
+<li>Allocation logic under exposure and drawdown constraints</li>
+<li>Investor-oriented summary reporting</li>
 </ul>
 </div>
 
@@ -186,90 +227,87 @@ footer {
 </section>
 
 <section id="systems">
-<h3>AI & Systems Work</h3>
+<h3>Systems & Execution Architecture</h3>
 <div class="grid">
 
 <div class="card">
-<b>Fusion Foundry India LLP — Private Market & Gen-AI Analyst</b>
+<b>AI-Assisted Investment Workflows</b>
 <ul>
-<li>Global Private Equity analysis</li>
-<li>Independent work on PE, Credit & Real Estate portfolio insights</li>
-<li>Prompt engineering for AI-driven portfolio simulators</li>
-<li>Tools: Claude, Google Colab (ML), GPT-4 Deep Research</li>
+<li>LLM-enabled financial extraction pipelines</li>
+<li>Portfolio simulation modeling (risk-adjusted outputs)</li>
+<li>Prompt engineering for structured insight generation</li>
+<li>Workflow documentation for auditability and repeatability</li>
 </ul>
 </div>
 
 <div class="card">
-<b>Fund Operations & NAV Systems</b>
+<b>Fund Operations & NAV Oversight</b>
 <ul>
-<li>NAV calculation (open-ended structures)</li>
-<li>Investor-level SOA drafting</li>
-<li>Daily & Monthly MIS reporting</li>
-<li>Reconciliation & process documentation</li>
+<li>Investor-level NAV computation for open-ended structures</li>
+<li>SOA drafting and reconciliation discipline</li>
+<li>MIS reporting frameworks and control structures</li>
+<li>Operational clarity aligned to investment decision cycles</li>
 </ul>
 </div>
 
 </div>
 </section>
 
-<section id="experience">
-<h3>Experience & Education</h3>
+<section id="documents">
+<h3>Research & Publications</h3>
 <div class="grid">
 
 <div class="card">
-<b>Experience</b>
-<ul>
-<li>Private Market & Gen-AI Analyst — Fusion Foundry (2024–Present)</li>
-<li>Equity Research Analyst — Ativir Securities (2024)</li>
-<li>Finance Analyst & Fund Accounting — Inspirigence Advisory</li>
-<li>Forex Analyst Intern — Thomas Cook India Ltd</li>
-</ul>
-</div>
-
-<div class="card">
-<b>Education & Credentials</b>
-<ul>
-<li>CFA Level 1 Candidate</li>
-<li>Bachelor's in Financial Markets — University of Mumbai (CGPA 8.1)</li>
-<li>Investment Banking Virtual Experience — Bank of America</li>
-<li>Global Finance & Business Mgmt — JP Morgan</li>
-</ul>
-</div>
-
-</div>
-</section>
-
-<section id="resume">
-<h3>Resume</h3>
-<div class="card">
-<a href="YOUR_GOOGLE_DRIVE_LINK" target="_blank">
+<b>Resume</b>
+<iframe src="PASTE_YOUR_RESUME_PREVIEW_LINK_HERE"></iframe>
+<br><br>
+<a href="PASTE_YOUR_RESUME_DOWNLOAD_LINK_HERE" target="_blank">
 Download Resume (PDF)
 </a>
+</div>
+
+<div class="card">
+<b>Alternative Investments Research Paper I</b>
+<iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
+<br><br>
+<a href="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/view" target="_blank">
+Download Research Paper I
+</a>
+</div>
+
+<div class="card">
+<b>Alternative Investments Research Paper II</b>
+<iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
+<br><br>
+<a href="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/view" target="_blank">
+Download Research Paper II
+</a>
+</div>
+
 </div>
 </section>
 
 <section id="contact">
 <h3>Contact</h3>
 <div class="card">
-Email: deepteshmejari04@gmail.com<br>
-Phone: +91 73041 29138<br>
-Location: Mumbai<br>
-LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">linkedin.com/in/deeptesh-mejari</a>
-
+Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
+Phone: +91 73041 29138<br><br>
+Location: Mumbai<br><br>
+LinkedIn: <a href="https://www.linkedin.com/in/deeptesh-mejari/" target="_blank">
+linkedin.com/in/deeptesh-mejari
+</a>
 </div>
 </section>
 
-<footer>
-© <span id="year"></span> Deeptesh Mejari
-</footer>
+<div class="footer">
+© <span id="year"></span> Deeptesh Mejari — Investment Strategy & Research
+</div>
 
 </div>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("year").textContent=new Date().getFullYear();
 </script>
 
 </body>
 </html>
-
-
