@@ -20,6 +20,7 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+
 body{
   margin:0;
   font-family:'Inter',sans-serif;
@@ -28,7 +29,7 @@ body{
   line-height:1.7;
 }
 
-/* Background depth */
+/* Background Glow */
 body::before{
   content:"";
   position:fixed;
@@ -41,7 +42,7 @@ body::before{
   z-index:-1;
 }
 
-/* Fixed Glass Nav */
+/* Frozen Glass Nav */
 header{
   position:fixed;
   top:20px;
@@ -68,12 +69,13 @@ nav a{
   color:var(--muted);
   text-decoration:none;
 }
+
 nav a:hover{color:var(--text)}
 
 .wrap{
   max-width:var(--max);
   margin:0 auto;
-  padding:160px 24px 120px;
+  padding:170px 24px 120px;
 }
 
 h1{
@@ -82,8 +84,6 @@ h1{
   margin-bottom:20px;
 }
 
-section{margin-top:120px}
-
 .section-title{
   font-size:12px;
   letter-spacing:0.25em;
@@ -91,6 +91,8 @@ section{margin-top:120px}
   color:var(--muted);
   margin-bottom:40px;
 }
+
+section{margin-top:120px}
 
 .grid{
   display:grid;
@@ -106,6 +108,7 @@ section{margin-top:120px}
   backdrop-filter:blur(25px);
   transition:0.3s ease;
 }
+
 .card:hover{
   transform:translateY(-6px);
   border-color:rgba(184,202,255,0.4);
@@ -117,26 +120,24 @@ section{margin-top:120px}
   color:var(--accent);
 }
 
-.diagram{
+.cert{
   display:flex;
-  flex-wrap:wrap;
-  gap:18px;
-  justify-content:center;
+  align-items:center;
+  gap:20px;
 }
 
-.node{
-  padding:14px 20px;
-  border-radius:12px;
-  background:rgba(255,255,255,0.04);
-  border:1px solid var(--border);
-  font-size:13px;
-  letter-spacing:0.05em;
+.cert img{
+  width:55px;
+  height:55px;
+  object-fit:contain;
 }
 
-/* Risk Return Graph */
-.graph{
+iframe{
   width:100%;
-  height:300px;
+  height:520px;
+  border:none;
+  border-radius:12px;
+  background:#0c0f14;
 }
 
 .footer{
@@ -145,6 +146,9 @@ section{margin-top:120px}
   padding-top:30px;
   color:var(--muted);
 }
+
+a{color:var(--accent); text-decoration:none}
+a:hover{opacity:0.8}
 </style>
 </head>
 
@@ -154,25 +158,28 @@ section{margin-top:120px}
   <div><strong>Deeptesh Mejari</strong></div>
   <nav>
     <a href="#bio">Bio</a>
-    <a href="#architecture">Architecture</a>
-    <a href="#lucra">Lucra</a>
     <a href="#impact">Impact</a>
+    <a href="#systems">Systems</a>
+    <a href="#credentials">Credentials</a>
+    <a href="#publications">Publications</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <div class="wrap">
 
+<!-- HERO -->
 <section id="bio">
 <h1>Investment judgment engineered with systems thinking.</h1>
 <p>
-Operating across public equities, IPO research, and Category I & II AIF environments,
+Operating across public equities, IPO diligence, and Category I & II AIF environments,
 I design structured valuation frameworks, investor onboarding architectures,
 and AI-enabled research systems that convert complexity into capital allocation clarity.
 Based in Mumbai.
 </p>
 </section>
 
+<!-- IMPACT -->
 <section id="impact">
 <div class="section-title">Capital & Operational Impact</div>
 <div class="grid">
@@ -191,50 +198,107 @@ Investor onboarding & reporting workflows structured
 </div>
 </section>
 
-<section id="architecture">
-<div class="section-title">Investment Decision Architecture</div>
-<div class="diagram">
-<div class="node">Market Data</div>
-<div class="node">Financial Structuring</div>
-<div class="node">Valuation Modeling</div>
-<div class="node">Risk Layer</div>
-<div class="node">Capital Allocation Logic</div>
-<div class="node">Investor Reporting</div>
+<!-- SYSTEMS -->
+<section id="systems">
+<div class="section-title">Systems & Execution Architecture</div>
+<div class="grid">
+
+<div class="card">
+<b>Lucra — AI Financial Intelligence Layer</b>
+<ul>
+<li>Financial document extraction & structuring workflows</li>
+<li>Automated insight synthesis for research cycles</li>
+<li>Decision-ready memo generation frameworks</li>
+</ul>
+</div>
+
+<div class="card">
+<b>Ascend — Allocation & Simulation Engine</b>
+<ul>
+<li>Risk-adjusted portfolio modeling</li>
+<li>Investor profiling & suitability logic</li>
+<li>Scenario-based capital allocation simulation</li>
+</ul>
+</div>
+
 </div>
 </section>
 
-<section id="lucra">
-<div class="section-title">Lucra — AI Financial Intelligence Layer</div>
-<div class="diagram">
-<div class="node">Financial Documents</div>
-<div class="node">Extraction Engine</div>
-<div class="node">Structured Data Layer</div>
-<div class="node">Insight Generator</div>
-<div class="node">Decision Memo Output</div>
+<!-- CREDENTIALS -->
+<section id="credentials">
+<div class="section-title">Credentials & Programs</div>
+
+<div class="grid">
+
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/07/Palantir_Technologies_logo.svg">
+<div>
+<b>Introduction to Foundry & AIP</b>
+Palantir Technologies
+</div>
+</div>
+
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/McKinsey_%26_Company_logo.svg">
+<div>
+<b>McKinsey Forward Learning Program</b>
+McKinsey & Company
+</div>
+</div>
+
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
+<div>
+<b>Data Foundations & Gen-AI</b>
+Google
+</div>
+</div>
+
+<div class="card cert">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg">
+<div>
+<b>Data Science</b>
+IBM
+</div>
+</div>
+
 </div>
 </section>
 
-<section>
-<div class="section-title">Risk / Return Simulation Snapshot</div>
-<svg class="graph" viewBox="0 0 600 300">
-<line x1="50" y1="250" x2="550" y2="250" stroke="#444"/>
-<line x1="50" y1="50" x2="50" y2="250" stroke="#444"/>
-<path d="M50 250 Q250 150 550 60" stroke="#b8caff" fill="transparent" stroke-width="3"/>
-<circle cx="300" cy="160" r="6" fill="#b8caff"/>
-<circle cx="450" cy="110" r="6" fill="#b8caff"/>
-</svg>
-<p style="color:var(--muted);margin-top:10px;">
-Illustrative risk-return simulation reflecting allocation efficiency modeling.
-</p>
+<!-- PUBLICATIONS -->
+<section id="publications">
+<div class="section-title">Research & Publications</div>
+
+<div class="grid">
+
+<div class="card">
+<b>Resume Preview</b>
+<iframe src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview"></iframe>
+<br><br>
+<a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank">Download Resume (PDF)</a>
+</div>
+
+<div class="card">
+<b>Alternative Investments Research Paper I</b>
+<iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
+</div>
+
+<div class="card">
+<b>Alternative Investments Research Paper II</b>
+<iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
+</div>
+
+</div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
 <div class="section-title">Engagement</div>
 <div class="card">
-Available for equity research, investment banking analytical roles,
-AIF strategy environments, and AI-enabled financial workflow architecture mandates.
+Available for equity research mandates, investment banking analytical roles,
+AIF strategy environments, and AI-enabled financial workflow architecture initiatives.
 <br><br>
-Email: <a href="mailto:deepteshmejari04@gmail.com" style="color:var(--accent);">deepteshmejari04@gmail.com</a><br>
+Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br>
 Location: Mumbai<br>
 LinkedIn: linkedin.com/in/deeptesh-mejari
 </div>
@@ -249,7 +313,7 @@ LinkedIn: linkedin.com/in/deeptesh-mejari
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
 
-/* Counter animation */
+/* Counter Animation */
 const counters=document.querySelectorAll('.counter');
 counters.forEach(counter=>{
   const update=()=>{
