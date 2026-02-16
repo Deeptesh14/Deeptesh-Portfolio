@@ -9,23 +9,41 @@
 
 <style>
 :root{
-  --bg:#0b0f14;
+  --bg:#0f1115;
   --glass:rgba(255,255,255,0.04);
   --border:rgba(255,255,255,0.08);
-  --text:#e6edf3;
-  --muted:#9aa4af;
-  --accent:#58a6ff;
-  --max:1100px;
+  --text:#f2f4f7;
+  --muted:#a0a8b3;
+  --accent:#7aa2ff;
+  --max:1050px;
 }
 
 *{box-sizing:border-box}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
   font-family:'Inter',sans-serif;
   background:var(--bg);
   color:var(--text);
-  line-height:1.65;
+  line-height:1.7;
+  letter-spacing:0.2px;
+}
+
+/* Subtle background glow */
+body::before{
+  content:"";
+  position:fixed;
+  top:-200px;
+  right:-200px;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle, rgba(122,162,255,0.08), transparent 70%);
+  filter:blur(120px);
+  z-index:-1;
 }
 
 a{
@@ -40,16 +58,17 @@ a:hover{
 .wrap{
   max-width:var(--max);
   margin:0 auto;
-  padding:60px 20px 100px;
+  padding:70px 24px 120px;
 }
 
+/* HEADER */
 header{
   display:flex;
   justify-content:space-between;
   align-items:flex-start;
   border-bottom:1px solid var(--border);
-  padding-bottom:20px;
-  margin-bottom:60px;
+  padding-bottom:24px;
+  margin-bottom:80px;
 }
 
 .brand h1{
@@ -66,90 +85,104 @@ header{
 
 nav{
   display:flex;
-  gap:20px;
+  gap:28px;
   font-size:13px;
+  letter-spacing:0.08em;
+  text-transform:uppercase;
 }
 
 nav a{
   color:var(--muted);
-  transition:0.2s ease;
+  transition:0.25s ease;
 }
 
 nav a:hover{
   color:var(--text);
 }
 
+/* HERO */
 .hero{
-  margin-bottom:80px;
-}
-
-.hero h2{
-  font-size:40px;
-  font-weight:600;
-  margin:0 0 20px;
+  margin-bottom:110px;
   max-width:850px;
 }
 
-.hero p{
-  color:var(--muted);
-  max-width:700px;
+.hero h2{
+  font-size:44px;
+  font-weight:600;
+  margin:0 0 28px;
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeInUp 1s ease forwards;
 }
 
+.hero p{
+  font-size:16px;
+  color:var(--muted);
+  opacity:0;
+  transform:translateY(20px);
+  animation:fadeInUp 1.5s ease forwards;
+}
+
+/* Sections */
 section{
-  margin-top:80px;
+  margin-top:110px;
 }
 
 section h3{
-  font-size:13px;
-  letter-spacing:0.18em;
+  font-size:12px;
+  letter-spacing:0.25em;
   text-transform:uppercase;
   color:var(--muted);
-  margin-bottom:30px;
+  margin-bottom:40px;
 }
 
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-  gap:30px;
+  gap:40px;
 }
 
+/* Glass Cards */
 .card{
   background:var(--glass);
   border:1px solid var(--border);
-  backdrop-filter:blur(14px);
-  padding:28px;
-  border-radius:16px;
+  backdrop-filter:blur(30px);
+  -webkit-backdrop-filter:blur(30px);
+  padding:36px;
+  border-radius:22px;
   transition:all 0.35s ease;
 }
 
 .card:hover{
   transform:translateY(-6px);
-  border-color:rgba(88,166,255,0.5);
-  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+  border-color:rgba(122,162,255,0.4);
 }
 
 .card b{
   font-weight:600;
   display:block;
-  margin-bottom:12px;
+  margin-bottom:16px;
+  font-size:15px;
 }
 
 ul{
-  padding-left:18px;
+  padding-left:20px;
   margin:0;
 }
 
 li{
-  margin:8px 0;
+  margin:10px 0;
   color:var(--muted);
+  font-size:14px;
 }
 
+/* Document Preview */
 iframe{
   width:100%;
-  height:500px;
+  height:520px;
   border:none;
-  border-radius:12px;
-  background:#0b0f14;
+  border-radius:16px;
+  background:#0f1115;
   transition:0.3s ease;
 }
 
@@ -157,17 +190,37 @@ iframe{
   transform:scale(1.01);
 }
 
+/* Fade on scroll */
+.fade{
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 0.8s ease;
+}
+
+.fade.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* Footer */
 .footer{
-  margin-top:120px;
+  margin-top:140px;
   border-top:1px solid var(--border);
-  padding-top:30px;
+  padding-top:40px;
   color:var(--muted);
   font-size:13px;
 }
 
+@keyframes fadeInUp{
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}
+
 @media(max-width:850px){
   .hero h2{
-    font-size:30px;
+    font-size:32px;
   }
 }
 </style>
@@ -179,89 +232,89 @@ iframe{
 <header>
   <div class="brand">
     <h1>Deeptesh Mejari</h1>
-    <p>Investment Strategy • Equity Research • Alternative Markets • Systems Design</p>
+    <p>Investment Strategy • Equity Research • Alternative Markets • Systems Architecture</p>
   </div>
   <nav>
     <a href="#research">Research</a>
     <a href="#systems">Systems</a>
-    <a href="#documents">Publications</a>
+    <a href="#publications">Publications</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
 <div class="hero">
-  <h2>Strategic investment thinking supported by disciplined research and structured execution.</h2>
+  <h2>Strategic investment thinking, built on disciplined research and structured execution.</h2>
   <p>
     Investment professional operating across public equities and private markets.
     Combines bottom-up financial analysis, portfolio structuring logic, and AI-enabled
-    research workflows to deliver investor-grade clarity.
-    Based in Mumbai. Open to investment strategy, research, and systems-oriented roles.
+    research systems to deliver investor-grade clarity.
+    Based in Mumbai. Open to investment strategy, research, and advisory roles.
   </p>
 </div>
 
-<section id="research">
-<h3>Equity & Private Markets Research</h3>
+<section id="research" class="fade">
+<h3>Research & Advisory Work</h3>
 <div class="grid">
 
 <div class="card">
-<b>Equity Research & IPO Diligence</b>
+<b>Equity Research & IPO Evaluation</b>
 <ul>
-<li>Bottom-up financial statement analysis and valuation discipline</li>
-<li>IPO offer structure evaluation and catalyst mapping</li>
-<li>Regression-backed sensitivity frameworks</li>
-<li>Risk partitioning and structured thesis documentation</li>
+<li>Bottom-up financial modeling and valuation structuring</li>
+<li>IPO offer analysis, catalyst mapping, and red-flag assessment</li>
+<li>Sensitivity and regression-backed scenario framing</li>
+<li>Structured thesis documentation for stakeholder clarity</li>
 </ul>
 </div>
 
 <div class="card">
-<b>Private Markets & Portfolio Evaluation</b>
+<b>Private Markets & Portfolio Structuring</b>
 <ul>
-<li>Private equity and alternative asset screening</li>
-<li>Return driver isolation and downside scenario modeling</li>
-<li>Allocation logic under exposure and drawdown constraints</li>
-<li>Investor-oriented summary reporting</li>
+<li>Private equity and alternative asset screening frameworks</li>
+<li>Return driver isolation and downside modeling</li>
+<li>Allocation logic under exposure and drawdown controls</li>
+<li>Investor-ready summary outputs and decision notes</li>
 </ul>
 </div>
 
 </div>
 </section>
 
-<section id="systems">
+<section id="systems" class="fade">
 <h3>Systems & Execution Architecture</h3>
 <div class="grid">
 
 <div class="card">
-<b>AI-Assisted Investment Workflows</b>
+<b>AI-Enabled Investment Workflows</b>
 <ul>
-<li>LLM-enabled financial extraction pipelines</li>
-<li>Portfolio simulation modeling (risk-adjusted outputs)</li>
-<li>Prompt engineering for structured insight generation</li>
-<li>Workflow documentation for auditability and repeatability</li>
+<li>LLM-based financial extraction and insight pipelines</li>
+<li>Portfolio simulation engines with risk-adjusted outputs</li>
+<li>Prompt engineering for structured research acceleration</li>
+<li>Documentation discipline for repeatable decision systems</li>
 </ul>
 </div>
 
 <div class="card">
-<b>Fund Operations & NAV Oversight</b>
+<b>Fund Operations & NAV Governance</b>
 <ul>
 <li>Investor-level NAV computation for open-ended structures</li>
-<li>SOA drafting and reconciliation discipline</li>
-<li>MIS reporting frameworks and control structures</li>
-<li>Operational clarity aligned to investment decision cycles</li>
+<li>SOA drafting and reconciliation oversight</li>
+<li>MIS reporting frameworks aligned to decision cycles</li>
+<li>Control structures supporting operational clarity</li>
 </ul>
 </div>
 
 </div>
 </section>
 
-<section id="documents">
-<h3>Research & Publications</h3>
+<section id="publications" class="fade">
+<h3>Publications & Credentials</h3>
 <div class="grid">
 
 <div class="card">
 <b>Resume</b>
-<iframe src="PASTE_YOUR_RESUME_PREVIEW_LINK_HERE"></iframe>
+<iframe src="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/preview"></iframe>
 <br><br>
-<a href="PASTE_YOUR_RESUME_DOWNLOAD_LINK_HERE" target="_blank">
+<a href="https://drive.google.com/file/d/1j0B1T4BU_c-5oWMYEyxXehAsJsbaAX3x/view" target="_blank">
 Download Resume (PDF)
 </a>
 </div>
@@ -269,25 +322,17 @@ Download Resume (PDF)
 <div class="card">
 <b>Alternative Investments Research Paper I</b>
 <iframe src="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1ixVS1d0j3dskhPMSDn3sWeSVngpGKruS/view" target="_blank">
-Download Research Paper I
-</a>
 </div>
 
 <div class="card">
 <b>Alternative Investments Research Paper II</b>
 <iframe src="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/preview"></iframe>
-<br><br>
-<a href="https://drive.google.com/file/d/1yAsPhwqi6C2PydE-eUzjvEGGzr-NT-lv/view" target="_blank">
-Download Research Paper II
-</a>
 </div>
 
 </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="fade">
 <h3>Contact</h3>
 <div class="card">
 Email: <a href="mailto:deepteshmejari04@gmail.com">deepteshmejari04@gmail.com</a><br><br>
@@ -307,6 +352,16 @@ linkedin.com/in/deeptesh-mejari
 
 <script>
 document.getElementById("year").textContent=new Date().getFullYear();
+
+const faders=document.querySelectorAll('.fade');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+    }
+  });
+});
+faders.forEach(el=>observer.observe(el));
 </script>
 
 </body>
